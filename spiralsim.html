@@ -209,10 +209,12 @@ function physicsStep(dt){
   }
   if(selfGravity) applySelfGravity(particles);
   applyBar(particles);
-  for(const p of particles){
+  for(let i = particles.length - 1; i >= 0; i--){
+    const p = particles[i];
     p.x+=p.vx*speed*dt; p.y+=p.vy*speed*dt;
-    if(p.x<0)p.x+=W; else if(p.x>W)p.x-=W;
-    if(p.y<0)p.y+=H; else if(p.y>H)p.y-=H;
+    if(p.x < 0 || p.x > W || p.y < 0 || p.y > H){
+      particles.splice(i, 1);
+    }
   }
 }
 
